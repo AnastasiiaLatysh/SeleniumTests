@@ -1,16 +1,16 @@
-from framework.base_page import BasePage
-from configs.configs import Configs
+from framework.home_page import HomePage
+from driver.driver import Driver
 
 
-class BaseTest:
+class TestBase:
 
-    base_page = None
+    home_page = None
+    admin_page = None
+    driver = None
 
-    @classmethod
-    def setup_class(cls):
-        cls.base_page = BasePage('chrome', Configs.base_url)
-        cls.base_page.open_home_page()
+    def setup_method(self):
+        self.driver = Driver("chrome").get_driver()
+        self.home_page = HomePage(self.driver)
 
-    @classmethod
-    def teardown_class(cls):
-        cls.base_page.quit()
+    def teardown_method(self):
+        self.home_page.quit()
