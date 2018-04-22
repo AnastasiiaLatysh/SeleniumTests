@@ -1,10 +1,9 @@
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException
 from framework.base_page import BasePage
 from framework.locators import AdminPageLocators
 from framework.login_page import LoginPage
 from selenium.webdriver.common.by import By
+from framework.catalog_page import CatalogPage
 
 
 class AdminPage(BasePage):
@@ -39,8 +38,11 @@ class AdminPage(BasePage):
             By.CSS_SELECTOR, 'li[id^="doc"]:nth-child(' + str(sub_menu_entry_index) + ')').click()
 
     def is_headline_displayed(self):
-        try:
-            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(AdminPageLocators.headline))
-            return True
-        except TimeoutException:
-            return False
+        self.is_element_present(AdminPageLocators.headline)
+
+    def open_catalog_menu(self):
+        self.driver.find_element(*AdminPageLocators.menu_list).find_element(*AdminPageLocators.catalog_menu_entry).click()
+        return CatalogPage(self.driver)
+
+    def is_catalog_menu_entry_selected(self):
+        return self.is_element_contain_attribute_with_value(AdminPageLocators.catalog_sub_menu_entry, 'class', 'selected')

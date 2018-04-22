@@ -1,8 +1,10 @@
+import sys
+import os
 from framework.home_page import HomePage
 from driver.driver import Driver
 
 
-class TestBase:
+class TestBase(object):
 
     home_page = None
     admin_page = None

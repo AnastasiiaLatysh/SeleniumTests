@@ -3,5 +3,8 @@
   {
     "name": "admin",
     "password": "admin"
-  }
+  },
+  "empty_cart_message": "There are no items in your cart.",
+  "home_page_title": "Online Store | My Store",
+  "add_new_product_headline": "Add New Product"
 }

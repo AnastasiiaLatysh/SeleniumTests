@@ -1,7 +1,3 @@
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-import logging
 from framework.base_page import BasePage
 from framework.locators import LoginPageLocators
 
@@ -18,7 +14,6 @@ class LoginPage(BasePage):
         self.enter_username(username)
         self.enter_password(password)
         self.driver.find_element(*LoginPageLocators.login_button).click()
-        try:
-            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(LoginPageLocators.logout_link))
-        except TimeoutException:
-            logging.error("Unable to find logout link to identify if user is logged in")
+
+    def is_user_logged_in(self):
+        return self.is_element_present(LoginPageLocators.logout_link)
